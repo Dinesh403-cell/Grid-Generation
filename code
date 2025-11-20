@@ -1,0 +1,72 @@
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter array size (for NxN array): ");
+        int N = 0;
+        while (true) {
+            try {
+                N = Integer.parseInt(s.nextLine());
+                if (N > 0) break;
+                System.out.print("Please enter a positive number: ");
+            } catch (Exception e) {
+                System.out.print("Invalid input. Try again: ");
+            }
+        }
+        int[][] grid = new int[N][N];
+        Random rand = new Random();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                grid[i][j] = 2 + rand.nextInt(10) * 2;
+            }
+        }
+        System.out.println("\nGenerated 2D array:");
+        printGrid(grid, -1);
+        System.out.print("\nEnter a number to highlight (even number 2-20): ");
+        int X = 0;
+        while (true) {
+            try {
+                X = Integer.parseInt(s.nextLine());
+                if (X >= 2 && X <= 20 && X % 2 == 0) break;
+                System.out.print("Enter an even number between 2–20: ");
+            } catch (Exception e) {
+                System.out.print("Invalid input. Try again: ");
+            }
+        }
+        System.out.println("\nArray with " + X + " highlighted:");
+        int count = printGrid(grid, X);
+        System.out.println("\nNumber " + X + " appeared " + count + " time(s)");
+    }
+    public static int printGrid(int[][] grid, int highlight) {
+        int n = grid.length;
+        int count = 0;
+        System.out.print("    ");
+        for (int i = 0; i < n; i++) {
+            System.out.printf(" %02d ", i);
+        }
+        System.out.println();
+        System.out.print("   +");
+        for (int i = 0; i < n; i++) 
+        System.out.print("----+");
+        System.out.println();
+        for (int r = 0; r < n; r++) {
+            System.out.printf("%02d ", r);
+            for (int c = 0; c < n; c++) {
+                int value = grid[r][c];
+
+                if (value == highlight) {
+                    System.out.printf("|[%2d]", value);
+                    count++;
+                } else {
+                    System.out.printf("| %2d ", value);
+                }
+            }
+            System.out.println("|");
+            System.out.print("   +");
+            for (int i = 0; i < n; i++) 
+            System.out.print("----+");
+            System.out.println();
+        }
+        return count;
+    }
+}
